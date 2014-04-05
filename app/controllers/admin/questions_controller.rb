@@ -55,7 +55,7 @@ class Admin::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :difficulty, options_attributes: [:text,:correct])
+    params.require(:question).permit(:title, :difficulty, options_attributes: [:id, :text,:correct])
   end
 
   def find_questionable

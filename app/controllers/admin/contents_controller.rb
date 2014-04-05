@@ -53,6 +53,6 @@ class Admin::ContentsController < ApplicationController
   private
 
   def content_params
-    params.require(:content).permit(:title,:transcript,:summary, :youtube_channel_url)
+    params.require(:content).permit(:title, :transcript, :summary, :youtube_channel_url, :questions_attributes => [:title, :difficulty, :_destroy, :options_attributes => [:text, :correct, :_destroy]])
   end
 end

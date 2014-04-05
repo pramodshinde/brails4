@@ -2,35 +2,34 @@
 .page-header
   %h1=t '.title', :default => @topic.title.titleize
 
-%p
-  %strong= model_class.human_attribute_name(:title) + ':'
-  %br
-  = @topic.title
-%p
-  %strong= model_class.human_attribute_name(:seq_number) + ':'
-  %br
-  = @topic.seq_number
-  
-.form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), admin_level_path(@topic.level_id), :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_topic_path(@topic), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_topic_path(@topic), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+.row
+  .col-xs-4
+    %strong= model_class.human_attribute_name(:title) + ':'
+    = @topic.title
+  .col-xs-4
+    %strong= model_class.human_attribute_name(:seq_number) + ':'
+    = @topic.seq_number
+  .col-xs-4
+    .pull-right
+      = link_to t('.back', :default => t("helpers.links.back")), admin_level_path(@topic.level_id), :class => 'btn'
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_topic_path(@topic), :class => 'btn'
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_topic_path(@topic), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
 
 %h3 Contents
 %table.table.table-striped
   %thead
     %tr
-    %th= Content.human_attribute_name(:id)
-    %th= Content.human_attribute_name(:title)
+      %th= Content.human_attribute_name(:title)
+      %th= Content.human_attribute_name(:transcript)
   %tbody
     - @contents.each do |content|
       %tr
-        %td= link_to content.id, admin_content_path(content)
-        %td= content.title
-        %td= content.transcript
+        %td= link_to content.title, admin_content_path(content)
+        %td= content.transcript.truncate(150)
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_content_path(content), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_content_path(content), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+          .pull-right
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_content_path(content), :class => 'btn btn-mini'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_content_path(content), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")), new_admin_topic_content_path(@topic), :class => 'btn btn-primary'
 
@@ -39,15 +38,13 @@
 %table.table.table-striped
   %thead
     %tr
-      %th= Question.human_attribute_name(:id)
       %th= Question.human_attribute_name(:title)
       %th= Question.human_attribute_name(:difficulty)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @questions.each do |question|
       %tr
-        %td= link_to question.id, admin_question_path(question)
-        %td= question.title
+        %td= link_to question.title, admin_question_path(question)
         %td= question.difficulty
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_question_path(question), :class => 'btn btn-mini'
